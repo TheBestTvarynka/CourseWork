@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/textures">
+        <file>textures/5.png</file>
+        <file>textures/bishopWhite.png</file>
+        <file>textures/kingWhite.png</file>
+        <file>textures/knightWhite.png</file>
+        <file>textures/queenWhite.png</file>
+        <file>textures/rookWhite.png</file>
+    </qresource>
+</RCC>

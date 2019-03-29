@@ -17,6 +17,7 @@ GLWidget::GLWidget(QWidget *parent): QGLWidget(parent)
     mpTimer.start(100);
 
     SizeSquare = 649;
+    type_of_new_figure = 0;
     texture = new GLuint[6];
     mouseDeltaX = 0;
     mouseDeltaY = 0;
@@ -111,7 +112,7 @@ void GLWidget::mousePressEvent(QMouseEvent *ap)
         tmp.x = countP + 1;
         countP = ap->y() / SizeSquare;
         tmp.y = countP + 1;
-        tmp.type = 0;
+        tmp.type = type_of_new_figure;
         figures.push_back(tmp);
         selectedFigure = figures.size() - 1;
     }

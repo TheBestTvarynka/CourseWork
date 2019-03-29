@@ -22,6 +22,7 @@ public:
     void selectObject();
     QVector<figure> figures;
     int selectedFigure;
+    int type_of_new_figure;
     ////////////
 private:
     //////////////// for textures

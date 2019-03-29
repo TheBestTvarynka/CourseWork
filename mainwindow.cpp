@@ -17,3 +17,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_comboBox_currentIndexChanged(int index)
+{
+    ui->widget->type_of_new_figure = index;
+}

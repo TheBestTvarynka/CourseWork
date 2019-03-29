@@ -21,6 +21,11 @@
        <widget class="QComboBox" name="comboBox">
         <item>
          <property name="text">
+          <string>king</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>queen</string>
          </property>
         </item>
@@ -31,17 +36,12 @@
         </item>
         <item>
          <property name="text">
-          <string>knight</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>king</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
           <string>bishop</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>knight</string>
          </property>
         </item>
        </widget>

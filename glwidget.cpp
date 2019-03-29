@@ -9,7 +9,7 @@ GLWidget::GLWidget(QWidget *parent): QGLWidget(parent)
     tmp.x = 4.0;
     tmp.y = 2.0;
     // type is index if texture[] array; in this situation, 0 - texture of king
-    tmp.type = 1;
+    tmp.type = 4;
     figures.push_back(tmp);
     selectedFigure = -1;
     // set a timer
@@ -17,13 +17,21 @@ GLWidget::GLWidget(QWidget *parent): QGLWidget(parent)
     mpTimer.start(100);
 
     SizeSquare = 649;
-    texture = new GLuint[2];
+    texture = new GLuint[6];
     mouseDeltaX = 0;
     mouseDeltaY = 0;
 }
 
 void GLWidget::initializeGL()
 {
+    QString paths[6];
+    paths[0] = ":/textures/textures/kingWhite.png";
+    paths[1] = ":/textures/textures/queenWhite.png";
+    paths[2] = ":/textures/textures/rookWhite.png";
+    paths[3] = ":/textures/textures/bishopWhite.png";
+    paths[4] = ":/textures/textures/knightWhite.png";
+    paths[5] = ":/textures/textures/5.png";
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, 649, 649, 0, 0, 1);
@@ -34,33 +42,22 @@ void GLWidget::initializeGL()
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // take special id for our texture
-    glGenTextures(2, texture);
+    glGenTextures(6, texture);
 
-    if(!img.load(":/textures/textures/kingWhite.png"))
-        qDebug() << "Error: can not load the image \n";
-    GL_formatted_image = QGLWidget::convertToGLFormat(img);
-    // tells opengl which texture id we will be working working with
-    glBindTexture(GL_TEXTURE_2D, texture[1]);
-    // sets various perameters for current texture
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    // load texture into RAM for using
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, GL_formatted_image.width(), GL_formatted_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, GL_formatted_image.bits());
-
-
-    if(!img.load(":/textures/textures/5.png"))
-        qDebug() << "Error: can not load the image \n";
-    GL_formatted_image = QGLWidget::convertToGLFormat(img);
-    glBindTexture(GL_TEXTURE_2D, texture[0]);
-    // sets various perameters for current texture
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    // load texture into RAM for using
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, GL_formatted_image.width(), GL_formatted_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, GL_formatted_image.bits());
+    for(int i = 0; i < 6; i++)
+    {
+        if(!img.load(paths[i]))
+            qDebug() << "Error: can not load the image \n";
+        GL_formatted_image = QGLWidget::convertToGLFormat(img);
+        glBindTexture(GL_TEXTURE_2D, texture[i]);
+        // sets various perameters for current texture
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        // load texture into RAM
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, GL_formatted_image.width(), GL_formatted_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, GL_formatted_image.bits());
+    }
 }
 
 void GLWidget::resizeGL(int w, int h)
@@ -83,7 +80,7 @@ void GLWidget::paintGL()
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // draw chessboard
-    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    glBindTexture(GL_TEXTURE_2D, texture[5]);
     glBegin(GL_QUADS);
     glTexCoord2f (0.0f, 0.0f);    glVertex2i(0, 0);
     glTexCoord2f (0.0f, 1.0f);    glVertex2i(SizeChessboard, 0);
@@ -114,7 +111,7 @@ void GLWidget::mousePressEvent(QMouseEvent *ap)
         tmp.x = countP + 1;
         countP = ap->y() / SizeSquare;
         tmp.y = countP + 1;
-        tmp.type = 1;
+        tmp.type = 0;
         figures.push_back(tmp);
         selectedFigure = figures.size() - 1;
     }
@@ -146,13 +143,9 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *ap)
 {
     mouseDeltaX = 0;
     mouseDeltaY = 0;
-    // if (ap->buttons() == Qt::LeftButton)
-    // {
-        // qDebug() << "> Left button on mouse upped... " << figures[selectedFigure].x << " " << figures[selectedFigure].x;
+
     figures[selectedFigure].x = myCeil(figures[selectedFigure].x);
     figures[selectedFigure].y = myCeil(figures[selectedFigure].y);
-        // qDebug() << "Left button on mouse upped... " << figures[selectedFigure].x << " " << figures[selectedFigure].x;
-    // }
 }
 
 void GLWidget::selectObject()

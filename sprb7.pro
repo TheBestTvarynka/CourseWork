@@ -37,4 +37,4 @@ FORMS += \
         mainwindow.ui
 
 RESOURCES += \
-    textures.qrc
+    resourse.qrc

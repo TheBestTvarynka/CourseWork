@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/textures">
+    <qresource prefix="/rextures">
         <file>textures/5.png</file>
         <file>textures/bishopWhite.png</file>
         <file>textures/kingWhite.png</file>
@@ -8,12 +8,14 @@
         <file>textures/rookWhite.png</file>
     </qresource>
     <qresource prefix="/icons">
+        <file>icons/main_logo_1.ico</file>
+        <file>icons/new.ico</file>
         <file>icons/open.ico</file>
+        <file>icons/quit.ico</file>
         <file>icons/save.ico</file>
         <file>icons/save_as.ico</file>
-        <file>icons/main_logo_1.ico</file>
-        <file>icons/main_logo_2.ico</file>
-        <file>icons/new.ico</file>
-        <file>icons/quit.ico</file>
+        <file>icons/quit_1.ico</file>
+        <file>icons/documentation.ico</file>
+        <file>icons/about.ico</file>
     </qresource>
 </RCC>

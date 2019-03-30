@@ -22,3 +22,13 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
     ui->widget->type_of_new_figure = index;
 }
+
+void MainWindow::on_actionSave_triggered()
+{
+    //
+}
+
+void MainWindow::on_actionQuit_triggered()
+{
+    QCoreApplication::quit();
+}

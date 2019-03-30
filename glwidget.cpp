@@ -26,12 +26,12 @@ GLWidget::GLWidget(QWidget *parent): QGLWidget(parent)
 void GLWidget::initializeGL()
 {
     QString paths[6];
-    paths[0] = ":/textures/textures/kingWhite.png";
-    paths[1] = ":/textures/textures/queenWhite.png";
-    paths[2] = ":/textures/textures/rookWhite.png";
-    paths[3] = ":/textures/textures/bishopWhite.png";
-    paths[4] = ":/textures/textures/knightWhite.png";
-    paths[5] = ":/textures/textures/5.png";
+    paths[0] = ":/rextures/textures/kingWhite.png";
+    paths[1] = ":/rextures/textures/queenWhite.png";
+    paths[2] = ":/rextures/textures/rookWhite.png";
+    paths[3] = ":/rextures/textures/bishopWhite.png";
+    paths[4] = ":/rextures/textures/knightWhite.png";
+    paths[5] = ":/rextures/textures/5.png";
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();

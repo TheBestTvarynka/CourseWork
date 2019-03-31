@@ -5,7 +5,7 @@
 #include <QTimer>
 #include <QMouseEvent>
 #include <QVector>
-#include "data_structure.h"
+#include "data_structure.cpp"
 
 class GLWidget : public QGLWidget
 {
@@ -14,7 +14,6 @@ public:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
-
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
@@ -24,6 +23,7 @@ public:
     int selectedFigure;
     int type_of_new_figure;
     ////////////
+    QVector<figure> *GetData();
 private:
     //////////////// for textures
     QImage img;

@@ -21,6 +21,7 @@ GLWidget::GLWidget(QWidget *parent): QGLWidget(parent)
     texture = new GLuint[6];
     mouseDeltaX = 0;
     mouseDeltaY = 0;
+
 }
 
 void GLWidget::initializeGL()
@@ -165,6 +166,11 @@ void GLWidget::selectObject()
             selectedFigure = i;
         }
     }
+}
+
+QVector<figure> *GLWidget::GetData()
+{
+    return &figures;
 }
 
 int GLWidget::myCeil(float i)

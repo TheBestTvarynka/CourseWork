@@ -26,12 +26,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    glwidget.cpp
+    glwidget.cpp \
+    data_structure.cpp
 
 HEADERS += \
         mainwindow.h \
-    glwidget.h \
-    data_structure.h
+    glwidget.h
 
 FORMS += \
         mainwindow.ui

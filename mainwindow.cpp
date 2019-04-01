@@ -13,12 +13,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     file_name = nullptr;
     unsaved_work = false;
-//    ui->comboBox->addItem("Queen");
-//    ui->comboBox->addItem("King");
-//    ui->comboBox->addItem("Rook");
-//    ui->comboBox->addItem("Knight");
-//    ui->comboBox->addItem("Bishop");
-
 }
 
 MainWindow::~MainWindow()
@@ -43,6 +37,52 @@ void MainWindow::write_file()
     }
     Output.flush();
     Output.close();
+}
+
+void MainWindow::read_file()
+{
+    figure tmp;
+    QString buff;
+    QVector<figure> *data = ui->widget->GetData();
+
+    QFile Input(file_name);
+    if (!Input.open(QIODevice::ReadOnly | QIODevice::Text))
+        qDebug() << "Error: can not open file...";
+    QTextStream in(&Input);
+
+    data->clear();
+
+    in >> buff;
+    tmp.type = string_to_id(buff);
+    in >> tmp.x;
+    in >> tmp.y;
+    while (!in.atEnd())
+    {
+        // qDebug() << tmp.type << " " << tmp.x << " " << tmp.y << "\n";
+        data->push_back(tmp);
+        in >> buff;
+        tmp.type = string_to_id(buff);
+        in >> tmp.x;
+        in >> tmp.y;
+    }
+
+    Input.flush();
+    Input.close();
+}
+
+int MainWindow::string_to_id(QString name)
+{
+    if (name == "king")
+        return 0;
+    if (name == "queen")
+        return 1;
+    if (name == "rook")
+        return 2;
+    if (name == "bishop")
+        return 3;
+    if (name == "knight")
+        return 4;
+    return 0;
 }
 
 QString MainWindow::id_to_string(int id)
@@ -73,7 +113,7 @@ void MainWindow::save_work()
         if (reply == QMessageBox::Yes)
         {
             if (file_name == nullptr)
-                file_name = QFileDialog::getOpenFileName(this, tr("Save file"), "/home/", "Text file (*.txt);;CSV-file (*.csv)");
+                file_name = QFileDialog::getSaveFileName(this, tr("Save file"), "/home/", "All files (*.*);;Text file (*.txt);;CSV-file (*.csv)");
             write_file();
         }
     }
@@ -87,7 +127,7 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 void MainWindow::on_actionSave_triggered()
 {
     if (file_name == nullptr)
-        file_name = QFileDialog::getOpenFileName(this, tr("Save file"), "/home/", "Text file (*.txt);;CSV-file (*.csv)");
+        file_name = QFileDialog::getSaveFileName(this, tr("Save file"), "/home/", "All files (*.*);;Text file (*.txt);;CSV-file (*.csv)");
     write_file();
 }
 
@@ -99,15 +139,19 @@ void MainWindow::on_actionQuit_triggered()
 void MainWindow::on_actionOpen_triggered()
 {
     save_work();
-    file_name = QFileDialog::getOpenFileName(this, tr("Open file"), "/home/", "Text file (*.txt);;CSV-file (*.csv)");
+    file_name = QFileDialog::getOpenFileName(this, tr("Open file"), "/home/", "All files (*.*);;Text file (*.txt);;CSV-file (*.csv)");
     if (file_name != nullptr)
     {
         // QMessageBox::information(this, tr("file name"), file_name);
         setWindowTitle("[*" + file_name + "] - Chess program");
     }
     else
+    {
         QMessageBox::information(this, tr("file name"), "Error: file not open...");
+        return;
+    }
     unsaved_work = true;
+    read_file();
 }
 
 void MainWindow::on_actionNew_triggered()
@@ -116,4 +160,10 @@ void MainWindow::on_actionNew_triggered()
     setWindowTitle("[*Untitled.txt] - Chess program");
     unsaved_work = true;
     file_name = nullptr;
+}
+
+void MainWindow::on_actionSave_as_triggered()
+{
+    file_name = QFileDialog::getSaveFileName(this, tr("Save file as"), "/home/", "All files (*.*);;Text file (*.txt);;CSV-file (*.csv)");
+    write_file();
 }

@@ -18,6 +18,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void write_file();
+    void read_file();
+    int string_to_id(QString name);
     QString id_to_string(int id);
     void save_work();
 private slots:
@@ -26,6 +28,8 @@ private slots:
     void on_actionQuit_triggered();
     void on_actionOpen_triggered();
     void on_actionNew_triggered();
+
+    void on_actionSave_as_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -183,3 +183,10 @@ void MainWindow::on_clear_scene_clicked()
     QVector<figure> *data = ui->widget->GetData();
     data->clear();
 }
+
+void MainWindow::on_change_type_currentIndexChanged(int index)
+{
+    QVector<figure> *data = ui->widget->GetData();
+    int s = ui->widget->selectedFigure;
+    (*data)[s].type = index;
+}

@@ -65,7 +65,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox_2">
+       <widget class="QComboBox" name="change_type">
         <item>
          <property name="text">
           <string>king</string>
@@ -119,7 +119,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="check">
         <property name="text">
          <string>check</string>
         </property>

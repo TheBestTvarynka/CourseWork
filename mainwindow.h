@@ -35,6 +35,8 @@ private slots:
 
     void on_clear_scene_clicked();
 
+    void on_change_type_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
 

@@ -128,11 +128,13 @@ void MainWindow::on_actionSave_triggered()
 {
     if (file_name == nullptr)
         file_name = QFileDialog::getSaveFileName(this, tr("Save file"), "/home/", "All files (*.*);;Text file (*.txt);;CSV-file (*.csv)");
-    write_file();
+    if (file_name != nullptr)
+        write_file();
 }
 
 void MainWindow::on_actionQuit_triggered()
 {
+    save_work();
     QCoreApplication::quit();
 }
 
@@ -175,6 +177,7 @@ void MainWindow::on_pushButton_4_clicked()
     {
         QVector<figure> *data = ui->widget->GetData();
         data->erase(data->begin() + s);
+        ui->widget->selectedFigure = -1;
     }
 }
 
@@ -182,6 +185,7 @@ void MainWindow::on_clear_scene_clicked()
 {
     QVector<figure> *data = ui->widget->GetData();
     data->clear();
+    ui->widget->selectedFigure = -1;
 }
 
 void MainWindow::on_change_type_currentIndexChanged(int index)

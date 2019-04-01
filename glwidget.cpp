@@ -77,11 +77,13 @@ void GLWidget::paintGL()
     qglClearColor(Qt::gray);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable (GL_TEXTURE_2D);
+    glEnable (GL_BLEND);
     // enable alfa
     glEnable(GL_BLEND);
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // draw chessboard
+    qglColor(Qt::white);
     glBindTexture(GL_TEXTURE_2D, texture[5]);
     glBegin(GL_QUADS);
     glTexCoord2f (0.0f, 0.0f);    glVertex2i(0, 0);
@@ -93,6 +95,16 @@ void GLWidget::paintGL()
     // draw figures
     for(int i = 0; i < figures.size(); i++)
     {
+        qglColor(Qt::white);
+        if (i == selectedFigure)
+        {
+
+            qglColor(Qt::red);
+//            glBegin(GL_QUADS);
+//            glVertex2i(SizeSquare * (figures[i].x - 1), SizeSquare * (figures[i].y - 1));
+//            glVertex2i(SizeSquare * figures[i].x, SizeSquare * (figures[i].y - 1));
+//            glEnd();
+        }
         glBindTexture(GL_TEXTURE_2D, texture[figures[i].type]);
         glBegin(GL_QUADS);
         glTexCoord2f (0.0f, 0.0f);    glVertex2i(SizeSquare * (figures[i].x - 1), SizeSquare * (figures[i].y - 1));

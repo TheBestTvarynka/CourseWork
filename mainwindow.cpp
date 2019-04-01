@@ -167,3 +167,19 @@ void MainWindow::on_actionSave_as_triggered()
     file_name = QFileDialog::getSaveFileName(this, tr("Save file as"), "/home/", "All files (*.*);;Text file (*.txt);;CSV-file (*.csv)");
     write_file();
 }
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    int s = ui->widget->selectedFigure;
+    if (s != -1)
+    {
+        QVector<figure> *data = ui->widget->GetData();
+        data->erase(data->begin() + s);
+    }
+}
+
+void MainWindow::on_clear_scene_clicked()
+{
+    QVector<figure> *data = ui->widget->GetData();
+    data->clear();
+}

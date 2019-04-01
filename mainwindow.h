@@ -31,6 +31,10 @@ private slots:
 
     void on_actionSave_as_triggered();
 
+    void on_pushButton_4_clicked();
+
+    void on_clear_scene_clicked();
+
 private:
     Ui::MainWindow *ui;
 

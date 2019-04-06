@@ -69,7 +69,7 @@ void GLWidget::resizeGL(int w, int h)
     glOrtho(0, w, h, 0, 0, 1);
     glViewport(0, 0, w, h);
     SizeChessboard = std::min(w, h);
-    SizeSquare = SizeChessboard / 8;
+    SizeSquare = float(SizeChessboard) / float(8);
 }
 
 void GLWidget::paintGL()
@@ -93,18 +93,23 @@ void GLWidget::paintGL()
     glEnd();
 
     // draw figures
+
+
+    if (selectedFigure != -1)
+    {
+        // qDebug() << selectedFigure << endl;
+        qglColor(Qt::gray);
+        glLineWidth(5);
+        glBegin(GL_LINE_LOOP);
+        glVertex2i(SizeSquare * (figures[selectedFigure].x - 1), SizeSquare * (figures[selectedFigure].y - 1));
+        glVertex2i(SizeSquare * figures[selectedFigure].x, SizeSquare * (figures[selectedFigure].y - 1));
+        glVertex2i(SizeSquare * figures[selectedFigure].x, SizeSquare * figures[selectedFigure].y);
+        glVertex2i(SizeSquare * (figures[selectedFigure].x - 1), SizeSquare * figures[selectedFigure].y);
+        glEnd();
+    }
     for(int i = 0; i < figures.size(); i++)
     {
         qglColor(Qt::white);
-        if (i == selectedFigure)
-        {
-
-            qglColor(Qt::red);
-//            glBegin(GL_QUADS);
-//            glVertex2i(SizeSquare * (figures[i].x - 1), SizeSquare * (figures[i].y - 1));
-//            glVertex2i(SizeSquare * figures[i].x, SizeSquare * (figures[i].y - 1));
-//            glEnd();
-        }
         glBindTexture(GL_TEXTURE_2D, texture[figures[i].type]);
         glBegin(GL_QUADS);
         glTexCoord2f (0.0f, 0.0f);    glVertex2i(SizeSquare * (figures[i].x - 1), SizeSquare * (figures[i].y - 1));

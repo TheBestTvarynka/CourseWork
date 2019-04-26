@@ -23,6 +23,7 @@ public:
     int selectedFigure;
     int type_of_new_figure;
     ////////////
+    bool overlays(int, int);
     QVector<figure> *GetData();
 private:
     //////////////// for textures

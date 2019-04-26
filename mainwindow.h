@@ -30,17 +30,17 @@ private slots:
     void on_actionNew_triggered();
 
     void on_actionSave_as_triggered();
-
     void on_pushButton_4_clicked();
-
     void on_clear_scene_clicked();
-
     void on_change_type_currentIndexChanged(int index);
+    void on_check_clicked();
 
 private:
     Ui::MainWindow *ui;
 
     bool unsaved_work;
+    bool path;
+    QVector<std::pair<float, float> > path_s;
     QString file_name;
     // QVector<figure> *data;
 };

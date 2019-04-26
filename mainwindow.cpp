@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     file_name = nullptr;
     unsaved_work = false;
+    path = false;
 }
 
 MainWindow::~MainWindow()
@@ -193,4 +194,13 @@ void MainWindow::on_change_type_currentIndexChanged(int index)
     QVector<figure> *data = ui->widget->GetData();
     int s = ui->widget->selectedFigure;
     (*data)[s].type = index;
+}
+
+void MainWindow::on_check_clicked()
+{
+    QVector<figure> *data = ui->widget->GetData();
+    for (int i = 0; i < data->size(); i++)
+    {
+
+    }
 }

@@ -33,7 +33,7 @@ private slots:
     void on_pushButton_4_clicked();
     void on_clear_scene_clicked();
     void on_change_type_currentIndexChanged(int index);
-    void on_check_clicked();
+    void on_check_clicked(int);
 
 private:
     Ui::MainWindow *ui;

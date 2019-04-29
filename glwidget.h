@@ -21,7 +21,6 @@ public:
     ////////////
     void selectObject();
     bool overlays(int, int);
-//    void check();
     QVector<figure> *GetData();
     QVector<point> *GetBattle();
     int myCeil(float);
@@ -31,6 +30,7 @@ public:
 private:
     QVector<point> battle;
     QVector<figure> figures;
+    QTimer mpTimer;
     //////////////// for textures
     QImage img;
     GLuint *texture;
@@ -42,9 +42,9 @@ private:
     int mousePosY;
     float SizeSquare;
     int SizeChessboard;
-    QTimer mpTimer;
+    bool show_path;
 signals:
-    void check_fights();
+    void check_fights(int);
 };
 
 #endif // GLWIDGET_H

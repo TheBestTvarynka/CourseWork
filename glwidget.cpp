@@ -22,7 +22,7 @@ GLWidget::GLWidget(QWidget *parent): QGLWidget(parent)
 	texture = new GLuint[6];
 	mouseDeltaX = 0;
 	mouseDeltaY = 0;
-
+    show_path = true;
 }
 
 void GLWidget::initializeGL()
@@ -96,11 +96,10 @@ void GLWidget::paintGL()
 	glEnd();
 
 	// draw figures
-
 	if (selectedFigure != -1)
 	{
 		// qDebug() << selectedFigure << endl;
-		qglColor(Qt::gray);
+        qglColor(Qt::green);
 		glLineWidth(5);
 		glBegin(GL_LINE_LOOP);
 		glVertex2i(SizeSquare * (figures[selectedFigure].x - 1), SizeSquare * (figures[selectedFigure].y - 1));
@@ -109,6 +108,18 @@ void GLWidget::paintGL()
 		glVertex2i(SizeSquare * (figures[selectedFigure].x - 1), SizeSquare * figures[selectedFigure].y);
 		glEnd();
 	}
+    if (show_path)
+    {
+        for (int p = 0; p < battle.size(); p++)
+        {
+            glLineWidth(20);
+            qglColor(Qt::red);
+            glBegin(GL_LINES);
+            glVertex2i(SizeSquare * (battle[p].x - 0.5), SizeSquare * (battle[p].y - 0.5));
+            glVertex2i(SizeSquare * (figures[selectedFigure].x - 0.5), SizeSquare * (figures[selectedFigure].y - 0.5));
+            glEnd();
+        }
+    }
 	for (int i = 0; i < figures.size(); i++)
 	{
 		qglColor(Qt::white);
@@ -124,6 +135,7 @@ void GLWidget::paintGL()
 
 void GLWidget::mousePressEvent(QMouseEvent *ap)
 {
+    show_path = false;
 	figure tmp;
 	int countP;
 	if (ap->buttons() == Qt::RightButton)
@@ -144,7 +156,7 @@ void GLWidget::mousePressEvent(QMouseEvent *ap)
 			selectedFigure = -1;
 		else
 			selectObject();
-		qDebug() << selectedFigure << " ";
+		// qDebug() << selectedFigure << " ";
 	}
 }
 
@@ -153,7 +165,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *ap)
 	float step = SizeSquare;
 	if (ap->buttons() == Qt::LeftButton && selectedFigure != -1)
 	{
-		qDebug() << selectedFigure << " - ";
+		// qDebug() << selectedFigure << " - ";
 		mouseDeltaX = ap->x() - mousePosX;
 		mouseDeltaY = ap->y() - mousePosY;
 		mousePosX = ap->x();
@@ -167,13 +179,15 @@ void GLWidget::mouseMoveEvent(QMouseEvent *ap)
 
 void GLWidget::mouseReleaseEvent(QMouseEvent *ap)
 {
-    emit check_fights();
-	int delta = 1;
-	if (selectedFigure == -1)
-		return;
-	int X, Y, locX, locY;
-	mouseDeltaX = 0;
-	mouseDeltaY = 0;
+
+    int delta = 1;
+    int X, Y, locX, locY;
+    mouseDeltaX = 0;
+    mouseDeltaY = 0;
+    show_path = true;
+
+    if (ap->buttons() == Qt::RightButton || selectedFigure == -1)
+        return;
 
 	X = figures[selectedFigure].x = myCeil(figures[selectedFigure].x);
 	Y = figures[selectedFigure].y = myCeil(figures[selectedFigure].y);
@@ -190,6 +204,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *ap)
 				{
 					figures[selectedFigure].x = a;
 					figures[selectedFigure].y = locY;
+                    emit check_fights(selectedFigure);
 					return;
 				}
 			}
@@ -200,7 +215,8 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *ap)
 				{
 					figures[selectedFigure].x = locX;
 					figures[selectedFigure].y = b;
-					return;
+                    emit check_fights(selectedFigure);
+                    return;
 				}
 			}
 			locY = std::min(8, Y + delta);
@@ -210,6 +226,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *ap)
 				{
 					figures[selectedFigure].x = c;
 					figures[selectedFigure].y = locY;
+                    emit check_fights(selectedFigure);
 					return;
 				}
 			}
@@ -220,12 +237,15 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *ap)
 				{
 					figures[selectedFigure].x = locX;
 					figures[selectedFigure].y = d;
+                    emit check_fights(selectedFigure);
 					return;
 				}
 			}
 			delta++;
 		}
 	}
+    else
+        emit check_fights(selectedFigure);
 }
 
 void GLWidget::selectObject()

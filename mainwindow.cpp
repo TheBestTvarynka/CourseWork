@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     unsaved_work = false;
     path = false;
 
-    connect(ui->widget, SIGNAL(check_fights()), this, SLOT(on_check_clicked()));
+    connect(ui->widget, SIGNAL(check_fights(int)), this, SLOT(on_check_clicked(int)));
 }
 
 MainWindow::~MainWindow()
@@ -189,6 +189,8 @@ void MainWindow::on_clear_scene_clicked()
 {
     QVector<figure> *data = ui->widget->GetData();
     data->clear();
+    QVector<point> *battle = ui->widget->GetBattle();
+    battle->clear();
     ui->widget->selectedFigure = -1;
 }
 
@@ -199,41 +201,71 @@ void MainWindow::on_change_type_currentIndexChanged(int index)
     (*data)[s].type = index;
 }
 
-void MainWindow::on_check_clicked()
+void MainWindow::on_check_clicked(int selected)
 {
-    qDebug() << "Yes, I find solution of my problem...";
-    // we search pray for selected figure
+    qDebug() << "Yes, I find solution of my problem... " << selected;
+//     we search pray for selected figure
 //    bool insert = false;
-//    QVector<figure> *data = ui->widget->GetData();
-//    QVector<point> *battle = ui->widget->GetBattle();
+    QVector<figure> *data = ui->widget->GetData();
+    QVector<point> *battle = ui->widget->GetBattle();
+    battle->clear();
+    point tmp;
+    float d1, d2;
 
-//    int selected = ui->widget->selectedFigure;
-//    if (selected == -1)
-//        return;
-//    point tmp;
-//    float d1, d2;
-//    for (int i = 0; i < data->size(); i++)
-//    {
-//        if (i == selected)
-//            continue;
-//        if ((*data)[i].x == (*data)[selected].x)
-//        {
-//            d1 = (*data)[i].x - (*data)[selected].x;
-//            // now we need pass throught the battle[j] and check all
-//            for (int j = 0; j < battle->size(); j++)
-//            {
-//                d2 = (*battle)[j].x - (*data)[selected].x;
-//                // if we need to erase pray
-//                if (d1 * d2 > 0 && abs(d1) < abs(d2))
-//                {
-////                    (*battle)[j].x = (*data)[i].x;
-////                    (*battle)[j].y = (*data)[i].y;
-//                    battle->erase(battle->begin() + j);
-//                }
-//            }
-//            tmp.x = (*data)[i].x;
-//            tmp.y = (*data)[i].y;
-//            battle->push_back(tmp);
-//        }
-//    }
+    for (int i = 0; i < data->size(); i++)
+    {
+        if (i == selected)
+            continue;
+        // qDebug() << "compare: " << (*data)[i].x << " " << (*data)[selected].x;
+        if ((*data)[i].y == (*data)[selected].y)
+        {
+            d1 = (*data)[i].x - (*data)[selected].x;
+            // now we need pass throught the battle[j] and check all
+            for (int j = 0; j < battle->size(); j++)
+            {
+                d2 = (*battle)[j].x - (*data)[selected].x;
+                // if we need to erase pray
+                qDebug() << "distances: " << d1 << " " << d2;
+                if (d1 * d2 > 0)
+                {
+                    if (abs(d1) < abs(d2))
+                    {
+                        qDebug() << "erase " << (*battle)[j].x << " " << (*battle)[j].y;
+                        battle->erase(battle->begin() + j);
+                    }
+                    else
+                        return;
+                }
+            }
+            tmp.x = (*data)[i].x;
+            tmp.y = (*data)[i].y;
+            battle->push_back(tmp);
+            qDebug() << "add " << tmp.x << " " << tmp.y;
+        }
+        if ((*data)[i].x == (*data)[selected].x)
+        {
+            d1 = (*data)[i].y - (*data)[selected].y;
+            // now we need pass throught the battle[j] and check all
+            for (int j = 0; j < battle->size(); j++)
+            {
+                d2 = (*battle)[j].y - (*data)[selected].y;
+                // if we need to erase pray
+                qDebug() << "distances: " << d1 << " " << d2;
+                if (d1 * d2 > 0)
+                {
+                    if (abs(d1) < abs(d2))
+                    {
+                        qDebug() << "erase " << (*battle)[j].x << " " << (*battle)[j].y;
+                        battle->erase(battle->begin() + j);
+                    }
+                    else
+                        return;
+                }
+            }
+            tmp.x = (*data)[i].x;
+            tmp.y = (*data)[i].y;
+            battle->push_back(tmp);
+            qDebug() << "add " << tmp.x << " " << tmp.y;
+        }
+    }
 }

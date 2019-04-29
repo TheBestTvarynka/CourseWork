@@ -1,6 +1,7 @@
 #include "glwidget.h"
 #include <math.h>
 #include <QDebug>
+#include <QColor>
 
 GLWidget::GLWidget(QWidget *parent): QGLWidget(parent)
 {
@@ -74,7 +75,9 @@ void GLWidget::resizeGL(int w, int h)
 
 void GLWidget::paintGL()
 {
-	qglClearColor(Qt::gray);
+	QColor background(50, 52, 61, 255);
+	qglClearColor(background);
+//    qglClearColor(Qt::gray);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable (GL_TEXTURE_2D);
 	glEnable (GL_BLEND);
@@ -93,7 +96,6 @@ void GLWidget::paintGL()
 	glEnd();
 
 	// draw figures
-
 
 	if (selectedFigure != -1)
 	{
@@ -138,7 +140,11 @@ void GLWidget::mousePressEvent(QMouseEvent *ap)
 	{
 		mousePosX = ap->x();
 		mousePosY = ap->y();
-		selectObject();
+		if (figures.empty())
+			selectedFigure = -1;
+		else
+			selectObject();
+		qDebug() << selectedFigure << " ";
 	}
 }
 
@@ -147,6 +153,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *ap)
 	float step = SizeSquare;
 	if (ap->buttons() == Qt::LeftButton && selectedFigure != -1)
 	{
+		qDebug() << selectedFigure << " - ";
 		mouseDeltaX = ap->x() - mousePosX;
 		mouseDeltaY = ap->y() - mousePosY;
 		mousePosX = ap->x();
@@ -160,61 +167,64 @@ void GLWidget::mouseMoveEvent(QMouseEvent *ap)
 
 void GLWidget::mouseReleaseEvent(QMouseEvent *ap)
 {
+    emit check_fights();
 	int delta = 1;
-    int X, Y, locX, locY;
+	if (selectedFigure == -1)
+		return;
+	int X, Y, locX, locY;
 	mouseDeltaX = 0;
 	mouseDeltaY = 0;
 
 	X = figures[selectedFigure].x = myCeil(figures[selectedFigure].x);
 	Y = figures[selectedFigure].y = myCeil(figures[selectedFigure].y);
-    if (overlays(X, Y))
+	if (overlays(X, Y))
 	{
 		// that means we have overlays
-        while (delta <= 8)
-        {
-            locX = std::max(1, X - delta);
-            locY = std::max(1, Y - delta);
-            for (int a = locX; a <= std::min(8, X + delta); a++)
-            {
-                if (!overlays(a, locY))
-                {
-                    figures[selectedFigure].x = a;
-                    figures[selectedFigure].y = locY;
-                    return;
-                }
-            }
-            locX = std::min(8, X + delta);
-            for (int b = locY; b <= std::min(8, Y + delta); b++)
-            {
-                if (!overlays(locX, b))
-                {
-                    figures[selectedFigure].x = locX;
-                    figures[selectedFigure].y = b;
-                    return;
-                }
-            }
-            locY = std::min(8, Y + delta);
-            for (int c = locX; c >= std::max(1, X - delta); c--)
-            {
-                if (!overlays(c, locY))
-                {
-                    figures[selectedFigure].x = c;
-                    figures[selectedFigure].y = locY;
-                    return;
-                }
-            }
-            locX = std::max(1, X - delta);
-            for (int d = locY; d >= std::max(1, Y - delta); d--)
-            {
-                if (!overlays(locX, d))
-                {
-                    figures[selectedFigure].x = locX;
-                    figures[selectedFigure].y = d;
-                    return;
-                }
-            }
-            delta++;
-        }
+		while (delta <= 8)
+		{
+			locX = std::max(1, X - delta);
+			locY = std::max(1, Y - delta);
+			for (int a = locX; a <= std::min(8, X + delta); a++)
+			{
+				if (!overlays(a, locY))
+				{
+					figures[selectedFigure].x = a;
+					figures[selectedFigure].y = locY;
+					return;
+				}
+			}
+			locX = std::min(8, X + delta);
+			for (int b = locY; b <= std::min(8, Y + delta); b++)
+			{
+				if (!overlays(locX, b))
+				{
+					figures[selectedFigure].x = locX;
+					figures[selectedFigure].y = b;
+					return;
+				}
+			}
+			locY = std::min(8, Y + delta);
+			for (int c = locX; c >= std::max(1, X - delta); c--)
+			{
+				if (!overlays(c, locY))
+				{
+					figures[selectedFigure].x = c;
+					figures[selectedFigure].y = locY;
+					return;
+				}
+			}
+			locX = std::max(1, X - delta);
+			for (int d = locY; d >= std::max(1, Y - delta); d--)
+			{
+				if (!overlays(locX, d))
+				{
+					figures[selectedFigure].x = locX;
+					figures[selectedFigure].y = d;
+					return;
+				}
+			}
+			delta++;
+		}
 	}
 }
 
@@ -248,7 +258,13 @@ bool GLWidget::overlays(int x, int y)
 
 QVector<figure> *GLWidget::GetData()
 {
-	return &figures;
+    return &figures;
+}
+
+QVector<point> *GLWidget::GetBattle()
+{
+    return &battle;
+
 }
 
 int GLWidget::myCeil(float i)

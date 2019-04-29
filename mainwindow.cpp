@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QTextStream>
+#include <math.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     file_name = nullptr;
     unsaved_work = false;
     path = false;
+
+    connect(ui->widget, SIGNAL(check_fights()), this, SLOT(on_check_clicked()));
 }
 
 MainWindow::~MainWindow()
@@ -198,9 +201,39 @@ void MainWindow::on_change_type_currentIndexChanged(int index)
 
 void MainWindow::on_check_clicked()
 {
-    QVector<figure> *data = ui->widget->GetData();
-    for (int i = 0; i < data->size(); i++)
-    {
+    qDebug() << "Yes, I find solution of my problem...";
+    // we search pray for selected figure
+//    bool insert = false;
+//    QVector<figure> *data = ui->widget->GetData();
+//    QVector<point> *battle = ui->widget->GetBattle();
 
-    }
+//    int selected = ui->widget->selectedFigure;
+//    if (selected == -1)
+//        return;
+//    point tmp;
+//    float d1, d2;
+//    for (int i = 0; i < data->size(); i++)
+//    {
+//        if (i == selected)
+//            continue;
+//        if ((*data)[i].x == (*data)[selected].x)
+//        {
+//            d1 = (*data)[i].x - (*data)[selected].x;
+//            // now we need pass throught the battle[j] and check all
+//            for (int j = 0; j < battle->size(); j++)
+//            {
+//                d2 = (*battle)[j].x - (*data)[selected].x;
+//                // if we need to erase pray
+//                if (d1 * d2 > 0 && abs(d1) < abs(d2))
+//                {
+////                    (*battle)[j].x = (*data)[i].x;
+////                    (*battle)[j].y = (*data)[i].y;
+//                    battle->erase(battle->begin() + j);
+//                }
+//            }
+//            tmp.x = (*data)[i].x;
+//            tmp.y = (*data)[i].y;
+//            battle->push_back(tmp);
+//        }
+//    }
 }

@@ -42,7 +42,6 @@ private:
     bool path;
     QVector<std::pair<float, float> > path_s;
     QString file_name;
-    // QVector<figure> *data;
 };
 
 #endif // MAINWINDOW_H

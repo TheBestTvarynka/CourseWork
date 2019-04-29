@@ -9,6 +9,7 @@
 
 class GLWidget : public QGLWidget
 {
+    Q_OBJECT
 public:
     explicit GLWidget(QWidget *parent = 0);
     void initializeGL();
@@ -19,13 +20,17 @@ public:
     void mouseReleaseEvent(QMouseEvent *);
     ////////////
     void selectObject();
-    QVector<figure> figures;
-    int selectedFigure;
-    int type_of_new_figure;
-    ////////////
     bool overlays(int, int);
+//    void check();
     QVector<figure> *GetData();
+    QVector<point> *GetBattle();
+    int myCeil(float);
+    ///////////
+    int type_of_new_figure;
+    int selectedFigure;
 private:
+    QVector<point> battle;
+    QVector<figure> figures;
     //////////////// for textures
     QImage img;
     GLuint *texture;
@@ -33,15 +38,13 @@ private:
     ////////////
     int mouseDeltaX;
     int mouseDeltaY;
-
     int mousePosX;
     int mousePosY;
-    ////////////
     float SizeSquare;
     int SizeChessboard;
     QTimer mpTimer;
-
-    int myCeil(float);
+signals:
+    void check_fights();
 };
 
 #endif // GLWIDGET_H

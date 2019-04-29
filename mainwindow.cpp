@@ -240,6 +240,7 @@ void MainWindow::check_rook(int selected)
                 tmp.x = (*data)[i].x;
                 tmp.y = (*data)[i].y;
                 battle->push_back(tmp);
+                ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
             }
         }
         if ((*data)[i].x == (*data)[selected].x)
@@ -264,6 +265,7 @@ void MainWindow::check_rook(int selected)
                 tmp.x = (*data)[i].x;
                 tmp.y = (*data)[i].y;
                 battle->push_back(tmp);
+                ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
             }
         }
     }
@@ -311,6 +313,7 @@ void MainWindow::check_bishop(int selected)
                 tmp.x = (*data)[i].x;
                 tmp.y = (*data)[i].y;
                 battle->push_back(tmp);
+                ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
             }
         }
     }
@@ -318,7 +321,6 @@ void MainWindow::check_bishop(int selected)
 
 void MainWindow::check_knight(int selected)
 {
-    qDebug() << "knight " << selected;
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
     point tmp;
@@ -333,6 +335,7 @@ void MainWindow::check_knight(int selected)
             tmp.x = (*data)[i].x;
             tmp.y = (*data)[i].y;
             battle->push_back(tmp);
+            ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
         }
     }
 }
@@ -354,14 +357,17 @@ void MainWindow::check_king(int selected)
             tmp.x = (*data)[i].x;
             tmp.y = (*data)[i].y;
             battle->push_back(tmp);
+            ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
         }
     }
 }
+
 void MainWindow::on_check_clicked(int selected)
 {
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
     battle->clear();
+    ui->listWidget->clear();
     switch ((*data)[selected].type)
     {
     case 0:

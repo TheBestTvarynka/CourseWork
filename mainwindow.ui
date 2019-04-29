@@ -119,6 +119,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QRadioButton" name="hide_paths">
+        <property name="text">
+         <string>hide paths</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QListView" name="list">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">

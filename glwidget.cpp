@@ -287,6 +287,11 @@ QVector<point> *GLWidget::GetBattle()
 
 }
 
+void GLWidget::SetShow_path(bool clicked)
+{
+    show_path = clicked;
+}
+
 int GLWidget::myCeil(float i)
 {
 	if (i - (int)(i) >= 0.5)

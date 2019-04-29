@@ -10,24 +10,6 @@
 class GLWidget : public QGLWidget
 {
     Q_OBJECT
-public:
-    explicit GLWidget(QWidget *parent = 0);
-    void initializeGL();
-    void resizeGL(int w, int h);
-    void paintGL();
-    void mousePressEvent(QMouseEvent *);
-    void mouseMoveEvent(QMouseEvent *);
-    void mouseReleaseEvent(QMouseEvent *);
-    ////////////
-    void selectObject();
-    bool overlays(int, int);
-    QVector<figure> *GetData();
-    QVector<point> *GetBattle();
-    int myCeil(float);
-    ///////////
-    int type_of_new_figure;
-    int selectedFigure;
-private:
     QVector<point> battle;
     QVector<figure> figures;
     QTimer mpTimer;
@@ -43,6 +25,24 @@ private:
     float SizeSquare;
     int SizeChessboard;
     bool show_path;
+public:
+    explicit GLWidget(QWidget *parent = 0);
+    void initializeGL();
+    void resizeGL(int w, int h);
+    void paintGL();
+    void mousePressEvent(QMouseEvent *);
+    void mouseMoveEvent(QMouseEvent *);
+    void mouseReleaseEvent(QMouseEvent *);
+    ////////////
+    void selectObject();
+    bool overlays(int, int);
+    QVector<figure> *GetData();
+    QVector<point> *GetBattle();
+    void SetShow_path(bool);
+    int myCeil(float);
+    ///////////
+    int type_of_new_figure;
+    int selectedFigure;
 signals:
     void check_fights(int);
 };

@@ -123,11 +123,6 @@ void MainWindow::save_work()
     }
 }
 
-void MainWindow::on_comboBox_currentIndexChanged(int index)
-{
-    ui->widget->type_of_new_figure = index;
-}
-
 void MainWindow::on_actionSave_triggered()
 {
     if (file_name == nullptr)
@@ -195,14 +190,6 @@ void MainWindow::on_clear_scene_clicked()
     battle->clear();
     ui->widget->selectedFigure = -1;
 }
-
-void MainWindow::on_change_type_currentIndexChanged(int index)
-{
-    QVector<figure> *data = ui->widget->GetData();
-    int s = ui->widget->selectedFigure;
-    (*data)[s].type = index;
-}
-
 
 void MainWindow::check_rook(int selected)
 {
@@ -342,7 +329,6 @@ void MainWindow::check_knight(int selected)
 
 void MainWindow::check_king(int selected)
 {
-    qDebug() << "king " << selected;
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
     float deltaX, deltaY;
@@ -394,4 +380,15 @@ void MainWindow::on_check_clicked(int selected)
 void MainWindow::on_hide_paths_clicked(bool checked)
 {
     ui->widget->SetShow_path(!checked);
+}
+
+void MainWindow::on_change_type_activated(int index)
+{
+    QVector<figure> *data = ui->widget->GetData();
+    (*data)[ui->widget->selectedFigure].type = index;
+}
+
+void MainWindow::on_comboBox_activated(int index)
+{
+    ui->widget->type_of_new_figure = index;
 }

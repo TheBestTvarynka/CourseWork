@@ -31,9 +31,7 @@ public:
     void check_bishop(int);
     void check_knight(int);
     void check_king(int);
-//    void check_queen()
 private slots:
-    void on_comboBox_currentIndexChanged(int index);
     void on_actionSave_triggered();
     void on_actionQuit_triggered();
     void on_actionOpen_triggered();
@@ -41,10 +39,11 @@ private slots:
     void on_actionSave_as_triggered();
     void on_pushButton_4_clicked();
     void on_clear_scene_clicked();
-    void on_change_type_currentIndexChanged(int index);
     void on_check_clicked(int);
 
     void on_hide_paths_clicked(bool checked);
+    void on_change_type_activated(int index);
+    void on_comboBox_activated(int index);
 };
 
 #endif // MAINWINDOW_H

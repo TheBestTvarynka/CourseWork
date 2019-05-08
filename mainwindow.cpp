@@ -32,7 +32,10 @@ void MainWindow::write_file()
 
     QFile Output(file_name);
     if (!Output.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
         qDebug() << "Error: can not open file...";
+        return;
+    }
     QTextStream out(&Output);
     for (int i = 0; i < data->size(); i++)
     {
@@ -404,4 +407,35 @@ void MainWindow::on_change_type_activated(int index)
 void MainWindow::on_comboBox_activated(int index)
 {
     ui->widget->type_of_new_figure = index;
+}
+
+void MainWindow::on_save_current_kils_clicked()
+{
+    QString file = QFileDialog::getSaveFileName(this, tr("Save file"), "/home/", "All files (*.*);;Text file (*.txt)");
+    if (file == nullptr || !file.contains(".txt"))
+    {
+        qDebug() << "file's name is empty or uncorrect...";
+        return;
+    }
+
+    int lim;
+    lim = ui->listWidget->count();
+
+    QFile Output(file);
+    if (!Output.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug() << "Error: can not open file...";
+        return;
+    }
+    QTextStream out(&Output);
+
+    for (int i = 0; i < lim ; i++)
+    {
+//        qDebug() << "start: " << i;
+//        replace = ui->listWidget->takeItem(i);
+//        qDebug() << ui->listWidget->item(i)->text();
+        out << ui->listWidget->item(i)->text() << "\n";
+    }
+    Output.flush();
+    Output.close();
 }

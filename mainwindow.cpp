@@ -347,7 +347,7 @@ void MainWindow::check_king(int selected)
 
     for (int i = 0; i < data->size(); i++)
     {
-        if (i != selected)
+        if (i == selected)
             continue;
         deltaX = (*data)[i].x - (*data)[selected].x;
         deltaY = (*data)[i].y - (*data)[selected].y;

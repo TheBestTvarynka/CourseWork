@@ -194,6 +194,7 @@ void MainWindow::on_clear_scene_clicked()
 void MainWindow::check_rook(int selected)
 {
 //    qDebug() << "rook";
+    QListWidgetItem *replace;
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
     point tmp;
@@ -214,7 +215,11 @@ void MainWindow::check_rook(int selected)
                 if (d1 * d2 > 0)
                 {
                     if (abs(d1) < abs(d2))
+                    {
+                        replace = ui->listWidget->takeItem(j);
+                        delete replace;
                         battle->erase(battle->begin() + j);
+                    }
                     else
                     {
                         flag = false;
@@ -239,7 +244,11 @@ void MainWindow::check_rook(int selected)
                 if (d1 * d2 > 0)
                 {
                     if (abs(d1) < abs(d2))
+                    {
+                        replace = ui->listWidget->takeItem(j);
+                        delete replace;
                         battle->erase(battle->begin() + j);
+                    }
                     else
                     {
                         flag = false;
@@ -260,6 +269,7 @@ void MainWindow::check_rook(int selected)
 
 void MainWindow::check_bishop(int selected)
 {
+    QListWidgetItem *replace;
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
     point tmp;
@@ -285,8 +295,9 @@ void MainWindow::check_bishop(int selected)
                 {
                     if (deltaX*deltaX + deltaY * deltaY < d1 * d1 + d2 * d2)
                     {
+                        replace = ui->listWidget->takeItem(j);
+                        delete replace;
                         battle->erase(battle->begin() + j);
-                        flag = true;
                     }
                     else
                     {
@@ -336,6 +347,8 @@ void MainWindow::check_king(int selected)
 
     for (int i = 0; i < data->size(); i++)
     {
+        if (i != selected)
+            continue;
         deltaX = (*data)[i].x - (*data)[selected].x;
         deltaY = (*data)[i].y - (*data)[selected].y;
         if (abs(deltaX) <= 1 && abs(deltaY) <= 1)

@@ -18,7 +18,7 @@
     <normaloff>:/icons/icons/main_logo_2.ico</normaloff>:/icons/icons/main_logo_2.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="leftMargin">
@@ -137,6 +137,24 @@
          </sizepolicy>
         </property>
        </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QPushButton" name="save_all_kils">
+          <property name="text">
+           <string>save all as file</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="save_current_kils">
+          <property name="text">
+           <string>save current as file</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>

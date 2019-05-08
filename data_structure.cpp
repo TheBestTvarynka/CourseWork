@@ -6,5 +6,5 @@ struct figure
 
 struct point
 {
-    int x, y;
+    float x, y;
 };

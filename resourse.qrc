@@ -17,5 +17,6 @@
         <file>icons/quit_1.ico</file>
         <file>icons/documentation.ico</file>
         <file>icons/about.ico</file>
+        <file>icons/delete-icon.ico</file>
     </qresource>
 </RCC>

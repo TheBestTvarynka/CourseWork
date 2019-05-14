@@ -270,7 +270,7 @@
   <action name="actionQuit">
    <property name="icon">
     <iconset resource="resourse.qrc">
-     <normaloff>:/icons/icons/quit_1.ico</normaloff>:/icons/icons/quit_1.ico</iconset>
+     <normaloff>:/icons/icons/delete-icon.ico</normaloff>:/icons/icons/delete-icon.ico</iconset>
    </property>
    <property name="text">
     <string>Quit</string>

@@ -209,7 +209,6 @@ void MainWindow::check_rook(int selected)
     float d1, d2;
     bool flag = false;
 
-    list_battles.clear();
     for (int i = 0; i < data->size(); i++)
     {
         if (i == selected)
@@ -292,7 +291,6 @@ void MainWindow::check_bishop(int selected)
     float deltaX, deltaY;
     bool flag = false;
 
-    list_battles.clear();
     for (int i = 0; i < data->size(); i++)
     {
         if (i == selected)
@@ -343,7 +341,6 @@ void MainWindow::check_knight(int selected)
 
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
-    list_battles.clear();
     point tmp;
     float deltaX, deltaY;
 
@@ -369,7 +366,6 @@ void MainWindow::check_king(int selected)
 
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
-    list_battles.clear();
     float deltaX, deltaY;
     point tmp;
 
@@ -398,6 +394,8 @@ void MainWindow::on_check_clicked(int selected)
     QVector<point> *battle = ui->widget->GetBattle();
     battle->clear();
     ui->listWidget->clear();
+    list_battles.clear();
+
     switch ((*data)[selected].type)
     {
     case 0:
@@ -451,12 +449,11 @@ void MainWindow::on_save_current_kils_clicked()
     QString file = QFileDialog::getSaveFileName(this, tr("Save file"), "/home/", "All files (*.*);;Text file (*.txt)");
     if (file == nullptr || !file.contains(".txt"))
     {
-        qDebug() << "file's name is empty or uncorrect...";
+        qDebug() << "file's name is empty or wrong type...";
         return;
     }
-
-    int lim;
-    lim = ui->listWidget->count();
+    int lim = list_battles.size();
+//    lim = ui->listWidget->count();
 
     QFile Output(file);
     if (!Output.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -471,8 +468,38 @@ void MainWindow::on_save_current_kils_clicked()
 //        qDebug() << "start: " << i;
 //        replace = ui->listWidget->takeItem(i);
 //        qDebug() << ui->listWidget->item(i)->text();
-        out << ui->listWidget->item(i)->text() << "\n";
+        out << list_battles[i] << "\n";
     }
     Output.flush();
     Output.close();
+}
+
+void MainWindow::on_save_all_kils_clicked()
+{
+    QString file = QFileDialog::getSaveFileName(this, tr("Save file"), "/home/", "All files (*.*);;Text file (*.txt)");
+    if (file == nullptr || !file.contains(".txt"))
+    {
+        qDebug() << "file's name is empty or wrong type...";
+        return;
+    }
+    ui->widget->SetShow_path(false);
+    int size = ui->widget->GetData()->size();
+
+    QFile Output(file);
+    if (!Output.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug() << "Error: can not open file...";
+        return;
+    }
+    QTextStream out(&Output);
+
+    for (int i = 0; i < size; i++)
+    {
+        on_check_clicked(i);
+        for (int j = 0; j < list_battles.size(); j++)
+           out << list_battles[j] << "\n";
+    }
+    Output.flush();
+    Output.close();
+    ui->widget->SetShow_path(true);
 }

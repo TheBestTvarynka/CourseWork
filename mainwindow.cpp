@@ -428,11 +428,6 @@ void MainWindow::update_ListWidget()
     }
 }
 
-void MainWindow::on_hide_paths_clicked(bool checked)
-{
-    ui->widget->SetShow_path(!checked);
-}
-
 void MainWindow::on_change_type_activated(int index)
 {
     QVector<figure> *data = ui->widget->GetData();

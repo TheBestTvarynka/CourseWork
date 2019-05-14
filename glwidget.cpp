@@ -287,7 +287,6 @@ QVector<figure> *GLWidget::GetData()
 QVector<point> *GLWidget::GetBattle()
 {
     return &battle;
-
 }
 
 void GLWidget::SetShow_path(bool clicked)

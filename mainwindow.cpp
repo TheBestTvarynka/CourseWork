@@ -175,15 +175,19 @@ void MainWindow::on_actionSave_as_triggered()
 
 void MainWindow::on_pushButton_4_clicked()
 {
+    qDebug() << "delete figure button...";
     int s = ui->widget->selectedFigure;
     if (s != -1)
     {
         QVector<figure> *data = ui->widget->GetData();
         QVector<point> *battle = ui->widget->GetBattle();
         data->erase(data->begin() + s);
-        battle->erase(battle->begin() + s);
+//        battle->erase(battle->begin() + s);
+        battle->clear();
         ui->widget->selectedFigure = -1;
+        ui->listWidget->clear();
     }
+    qDebug() << "deleting finished success...";
 }
 
 void MainWindow::on_clear_scene_clicked()
@@ -199,15 +203,13 @@ void MainWindow::check_rook(int selected)
 {
 //    qDebug() << "rook";
     QString t;
-
-    QListWidgetItem *replace;
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
-    list_battles.clear();
     point tmp;
     float d1, d2;
     bool flag = false;
 
+    list_battles.clear();
     for (int i = 0; i < data->size(); i++)
     {
         if (i == selected)
@@ -283,16 +285,14 @@ void MainWindow::check_rook(int selected)
 void MainWindow::check_bishop(int selected)
 {
     QString t;
-
-    QListWidgetItem *replace;
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
-    list_battles.clear();
     point tmp;
     float d1, d2;
     float deltaX, deltaY;
     bool flag = false;
 
+    list_battles.clear();
     for (int i = 0; i < data->size(); i++)
     {
         if (i == selected)

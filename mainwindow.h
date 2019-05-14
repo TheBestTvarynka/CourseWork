@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow
     bool unsaved_work;
     bool path;
     QVector<std::pair<float, float> > path_s;
+    QVector<QString> list_battles;
     QString file_name;
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -40,6 +41,7 @@ private slots:
     void on_pushButton_4_clicked();
     void on_clear_scene_clicked();
     void on_check_clicked(int);
+    void update_ListWidget();
 
     void on_hide_paths_clicked(bool checked);
     void on_change_type_activated(int index);

@@ -245,7 +245,10 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *ap)
 		}
 	}
     else
+    {
         emit check_fights(selectedFigure);
+        emit update_list();
+    }
 }
 
 void GLWidget::selectObject()

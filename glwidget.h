@@ -45,6 +45,7 @@ public:
     int selectedFigure;
 signals:
     void check_fights(int);
+    void update_list();
 };
 
 #endif // GLWIDGET_H

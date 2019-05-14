@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     path = false;
 
     connect(ui->widget, SIGNAL(check_fights(int)), this, SLOT(on_check_clicked(int)));
+    connect(ui->widget, SIGNAL(update_list()), this, SLOT(update_ListWidget()));
 }
 
 MainWindow::~MainWindow()
@@ -197,9 +198,12 @@ void MainWindow::on_clear_scene_clicked()
 void MainWindow::check_rook(int selected)
 {
 //    qDebug() << "rook";
+    QString t;
+
     QListWidgetItem *replace;
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
+    list_battles.clear();
     point tmp;
     float d1, d2;
     bool flag = false;
@@ -219,8 +223,9 @@ void MainWindow::check_rook(int selected)
                 {
                     if (abs(d1) < abs(d2))
                     {
-                        replace = ui->listWidget->takeItem(j);
-                        delete replace;
+//                        replace = ui->listWidget->takeItem(j);
+//                        delete replace;
+                        list_battles.erase(list_battles.begin() + j);
                         battle->erase(battle->begin() + j);
                     }
                     else
@@ -235,7 +240,9 @@ void MainWindow::check_rook(int selected)
                 tmp.x = (*data)[i].x;
                 tmp.y = (*data)[i].y;
                 battle->push_back(tmp);
-                ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
+//                ui->listWidget->addItem();
+                t = id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")";
+                list_battles.push_back(t);
             }
         }
         if ((*data)[i].x == (*data)[selected].x)
@@ -248,8 +255,9 @@ void MainWindow::check_rook(int selected)
                 {
                     if (abs(d1) < abs(d2))
                     {
-                        replace = ui->listWidget->takeItem(j);
-                        delete replace;
+//                        replace = ui->listWidget->takeItem(j);
+//                        delete replace;
+                        list_battles.erase(list_battles.begin() + j);
                         battle->erase(battle->begin() + j);
                     }
                     else
@@ -264,7 +272,9 @@ void MainWindow::check_rook(int selected)
                 tmp.x = (*data)[i].x;
                 tmp.y = (*data)[i].y;
                 battle->push_back(tmp);
-                ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
+//                ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
+                t = id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")";
+                list_battles.push_back(t);
             }
         }
     }
@@ -272,9 +282,12 @@ void MainWindow::check_rook(int selected)
 
 void MainWindow::check_bishop(int selected)
 {
+    QString t;
+
     QListWidgetItem *replace;
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
+    list_battles.clear();
     point tmp;
     float d1, d2;
     float deltaX, deltaY;
@@ -298,8 +311,10 @@ void MainWindow::check_bishop(int selected)
                 {
                     if (deltaX*deltaX + deltaY * deltaY < d1 * d1 + d2 * d2)
                     {
-                        replace = ui->listWidget->takeItem(j);
-                        delete replace;
+//                        replace = ui->listWidget->takeItem(j);
+//                        delete replace;
+//                        battle->erase(battle->begin() + j);
+                        list_battles.erase(list_battles.begin() + j);
                         battle->erase(battle->begin() + j);
                     }
                     else
@@ -314,7 +329,9 @@ void MainWindow::check_bishop(int selected)
                 tmp.x = (*data)[i].x;
                 tmp.y = (*data)[i].y;
                 battle->push_back(tmp);
-                ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
+//                ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
+                t = id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")";
+                list_battles.push_back(t);
             }
         }
     }
@@ -322,8 +339,11 @@ void MainWindow::check_bishop(int selected)
 
 void MainWindow::check_knight(int selected)
 {
+    QString t;
+
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
+    list_battles.clear();
     point tmp;
     float deltaX, deltaY;
 
@@ -336,15 +356,20 @@ void MainWindow::check_knight(int selected)
             tmp.x = (*data)[i].x;
             tmp.y = (*data)[i].y;
             battle->push_back(tmp);
-            ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
+//            ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
+            t = id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")";
+            list_battles.push_back(t);
         }
     }
 }
 
 void MainWindow::check_king(int selected)
 {
+    QString t;
+
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
+    list_battles.clear();
     float deltaX, deltaY;
     point tmp;
 
@@ -359,13 +384,16 @@ void MainWindow::check_king(int selected)
             tmp.x = (*data)[i].x;
             tmp.y = (*data)[i].y;
             battle->push_back(tmp);
-            ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
+//            ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
+            t = id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")";
+            list_battles.push_back(t);
         }
     }
 }
 
 void MainWindow::on_check_clicked(int selected)
 {
+    QVector<QString> res;
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
     battle->clear();
@@ -390,6 +418,15 @@ void MainWindow::on_check_clicked(int selected)
         break;
     default:
         break;
+    }
+}
+
+void MainWindow::update_ListWidget()
+{
+    ui->listWidget->clear();
+    for (int i = 0; i < list_battles.size(); i++)
+    {
+        ui->listWidget->addItem(list_battles[i]);
     }
 }
 

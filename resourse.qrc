@@ -19,4 +19,8 @@
         <file>icons/about.ico</file>
         <file>icons/delete-icon.ico</file>
     </qresource>
+    <qresource prefix="/documentation">
+        <file>documentation/CreateFigurePhoto.png</file>
+        <file>documentation/ShowBattles.png</file>
+    </qresource>
 </RCC>

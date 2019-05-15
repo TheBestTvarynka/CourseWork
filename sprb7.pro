@@ -27,14 +27,17 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     glwidget.cpp \
-    data_structure.cpp
+    data_structure.cpp \
+    documentation.cpp
 
 HEADERS += \
         mainwindow.h \
-    glwidget.h
+    glwidget.h \
+    documentation.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    documentation.ui
 
 RESOURCES += \
     resourse.qrc

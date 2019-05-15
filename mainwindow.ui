@@ -14,8 +14,8 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/icons/icons/main_logo_2.ico</normaloff>:/icons/icons/main_logo_2.ico</iconset>
+   <iconset resource="resourse.qrc">
+    <normaloff>:/icons/icons/main_logo_1.ico</normaloff>:/icons/icons/main_logo_1.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout_3">

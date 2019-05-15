@@ -47,6 +47,7 @@ private slots:
     void on_comboBox_activated(int index);
     void on_save_current_kils_clicked();
     void on_save_all_kils_clicked();
+    void on_actionDocumentation_triggered();
 };
 
 #endif // MAINWINDOW_H

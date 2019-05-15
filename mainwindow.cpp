@@ -7,6 +7,8 @@
 #include <QTextStream>
 #include <math.h>
 
+#include "documentation.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -497,4 +499,11 @@ void MainWindow::on_save_all_kils_clicked()
     Output.flush();
     Output.close();
     ui->widget->SetShow_path(true);
+}
+
+void MainWindow::on_actionDocumentation_triggered()
+{
+    Documentation *newWindow = new Documentation;
+    newWindow->show();
+
 }

@@ -42,6 +42,7 @@ private slots:
     void on_clear_scene_clicked();
     void on_check_clicked(int);
     void update_ListWidget();
+    void save_flag();
 
     void on_change_type_activated(int index);
     void on_comboBox_activated(int index);

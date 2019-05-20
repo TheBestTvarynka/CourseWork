@@ -46,6 +46,7 @@ public:
 signals:
     void check_fights(int);
     void update_list();
+    void unsave();
 };
 
 #endif // GLWIDGET_H

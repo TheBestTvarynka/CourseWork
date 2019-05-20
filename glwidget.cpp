@@ -135,6 +135,7 @@ void GLWidget::paintGL()
 
 void GLWidget::mousePressEvent(QMouseEvent *ap)
 {
+    emit unsave();
     show_path = false;
 	figure tmp;
 	int countP;

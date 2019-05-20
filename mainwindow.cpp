@@ -15,8 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     file_name = nullptr;
-    unsaved_work = false;
+    unsaved_work = true;
     path = false;
+    setWindowTitle("[*Untitled.txt] - Chess program");
 
     connect(ui->widget, SIGNAL(check_fights(int)), this, SLOT(on_check_clicked(int)));
     connect(ui->widget, SIGNAL(update_list()), this, SLOT(update_ListWidget()));
@@ -119,6 +120,9 @@ void MainWindow::save_work()
 {
     if (unsaved_work)
     {
+        // connect
+        unsaved_work = false;
+        connect(ui->widget, SIGNAL(unsave()), this, SLOT(save_flag()));
         QMessageBox::StandardButton reply = QMessageBox::question(this, "Save?", "You have unsaved work. Save it?", QMessageBox::Yes | QMessageBox::No);
         if (reply == QMessageBox::Yes)
         {
@@ -173,11 +177,13 @@ void MainWindow::on_actionSave_as_triggered()
 {
     file_name = QFileDialog::getSaveFileName(this, tr("Save file as"), "/home/", "All files (*.*);;Text file (*.txt);;CSV-file (*.csv)");
     write_file();
+//    unsaved_work = false;
 }
 
 void MainWindow::on_pushButton_4_clicked()
 {
     qDebug() << "delete figure button...";
+    save_flag();
     int s = ui->widget->selectedFigure;
     if (s != -1)
     {
@@ -430,8 +436,16 @@ void MainWindow::update_ListWidget()
     }
 }
 
+void MainWindow::save_flag()
+{
+    unsaved_work = true;
+//    QString title = ui->;
+    setWindowTitle("[*" + file_name + "] - CHess program");
+}
+
 void MainWindow::on_change_type_activated(int index)
 {
+    save_flag();
     QVector<figure> *data = ui->widget->GetData();
     (*data)[ui->widget->selectedFigure].type = index;
 }

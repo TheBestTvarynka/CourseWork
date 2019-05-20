@@ -20,7 +20,10 @@
         <file>icons/delete-icon.ico</file>
     </qresource>
     <qresource prefix="/documentation">
-        <file>documentation/CreateFigurePhoto.png</file>
-        <file>documentation/ShowBattles.png</file>
+        <file>documentation/3.png</file>
+        <file>documentation/4.png</file>
+        <file>documentation/2.png</file>
+        <file>documentation/5.png</file>
+        <file>documentation/1.png</file>
     </qresource>
 </RCC>

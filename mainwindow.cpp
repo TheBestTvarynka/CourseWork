@@ -524,3 +524,8 @@ void MainWindow::on_actionDocumentation_triggered()
     newWindow->show();
 
 }
+
+void MainWindow::on_actionAbout_triggered()
+{
+    QMessageBox::information(this, tr("About"), "Chess program\nAuthor: PAVLO\ne-mail: pspos.developqkation@gmail.com\nAll right reserved");
+}

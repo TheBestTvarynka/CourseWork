@@ -49,6 +49,7 @@ private slots:
     void on_save_current_kils_clicked();
     void on_save_all_kils_clicked();
     void on_actionDocumentation_triggered();
+    void on_actionAbout_triggered();
 };
 
 #endif // MAINWINDOW_H

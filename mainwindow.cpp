@@ -448,6 +448,9 @@ void MainWindow::on_change_type_activated(int index)
     save_flag();
     QVector<figure> *data = ui->widget->GetData();
     (*data)[ui->widget->selectedFigure].type = index;
+
+    on_check_clicked(ui->widget->selectedFigure);
+    update_ListWidget();
 }
 
 void MainWindow::on_comboBox_activated(int index)

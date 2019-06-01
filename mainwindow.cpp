@@ -232,8 +232,6 @@ void MainWindow::check_rook(int selected)
                 {
                     if (abs(d1) < abs(d2))
                     {
-//                        replace = ui->listWidget->takeItem(j);
-//                        delete replace;
                         list_battles.erase(list_battles.begin() + j);
                         battle->erase(battle->begin() + j);
                     }
@@ -249,7 +247,6 @@ void MainWindow::check_rook(int selected)
                 tmp.x = (*data)[i].x;
                 tmp.y = (*data)[i].y;
                 battle->push_back(tmp);
-//                ui->listWidget->addItem();
                 t = id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")";
                 list_battles.push_back(t);
             }
@@ -264,8 +261,6 @@ void MainWindow::check_rook(int selected)
                 {
                     if (abs(d1) < abs(d2))
                     {
-//                        replace = ui->listWidget->takeItem(j);
-//                        delete replace;
                         list_battles.erase(list_battles.begin() + j);
                         battle->erase(battle->begin() + j);
                     }
@@ -281,7 +276,6 @@ void MainWindow::check_rook(int selected)
                 tmp.x = (*data)[i].x;
                 tmp.y = (*data)[i].y;
                 battle->push_back(tmp);
-//                ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
                 t = id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")";
                 list_battles.push_back(t);
             }
@@ -305,7 +299,6 @@ void MainWindow::check_bishop(int selected)
             continue;
         deltaX = (*data)[i].x - (*data)[selected].x;
         deltaY = (*data)[i].y - (*data)[selected].y;
-
         if (abs(deltaX) == abs(deltaY))
         {
             flag = true;
@@ -317,9 +310,6 @@ void MainWindow::check_bishop(int selected)
                 {
                     if (deltaX*deltaX + deltaY * deltaY < d1 * d1 + d2 * d2)
                     {
-//                        replace = ui->listWidget->takeItem(j);
-//                        delete replace;
-//                        battle->erase(battle->begin() + j);
                         list_battles.erase(list_battles.begin() + j);
                         battle->erase(battle->begin() + j);
                     }
@@ -335,7 +325,6 @@ void MainWindow::check_bishop(int selected)
                 tmp.x = (*data)[i].x;
                 tmp.y = (*data)[i].y;
                 battle->push_back(tmp);
-//                ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
                 t = id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")";
                 list_battles.push_back(t);
             }
@@ -439,7 +428,6 @@ void MainWindow::update_ListWidget()
 void MainWindow::save_flag()
 {
     unsaved_work = true;
-//    QString title = ui->;
     setWindowTitle("[*" + file_name + "] - CHess program");
 }
 
@@ -467,7 +455,6 @@ void MainWindow::on_save_current_kils_clicked()
         return;
     }
     int lim = list_battles.size();
-//    lim = ui->listWidget->count();
 
     QFile Output(file);
     if (!Output.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -479,9 +466,6 @@ void MainWindow::on_save_current_kils_clicked()
 
     for (int i = 0; i < lim ; i++)
     {
-//        qDebug() << "start: " << i;
-//        replace = ui->listWidget->takeItem(i);
-//        qDebug() << ui->listWidget->item(i)->text();
         out << list_battles[i] << "\n";
     }
     Output.flush();

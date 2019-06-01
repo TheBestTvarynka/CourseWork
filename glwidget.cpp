@@ -15,7 +15,7 @@ GLWidget::GLWidget(QWidget *parent): QGLWidget(parent)
 	selectedFigure = -1;
 	// set a timer
 	connect( &mpTimer, SIGNAL(timeout()), this, SLOT(updateGL()));
-	mpTimer.start(100);
+    mpTimer.start(10);
 
 	SizeSquare = 649;
 	type_of_new_figure = 0;
@@ -42,7 +42,7 @@ void GLWidget::initializeGL()
 	glEnable (GL_TEXTURE_2D);
 	////////// enable alfa
 	glEnable(GL_BLEND);
-	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// take special id for our texture
 	glGenTextures(6, texture);

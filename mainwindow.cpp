@@ -6,6 +6,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <math.h>
+#include <QMessageBox>
 
 #include "documentation.h"
 
@@ -52,6 +53,7 @@ void MainWindow::write_file()
 
 void MainWindow::read_file()
 {
+    int t;
     figure tmp;
     QString buff;
     QVector<figure> *data = ui->widget->GetData();
@@ -64,13 +66,16 @@ void MainWindow::read_file()
     data->clear();
 
     in >> buff;
-    tmp.type = string_to_id(buff);
+    tmp.type = string_to_id(buff);;
     in >> tmp.x;
     in >> tmp.y;
     while (!in.atEnd())
     {
         // qDebug() << tmp.type << " " << tmp.x << " " << tmp.y << "\n";
-        data->push_back(tmp);
+        if (tmp.type != -1 && (tmp.x >= 1 && tmp.x <= 8) && (tmp.y >= 1 && tmp.y <= 8))
+            data->push_back(tmp);
+        else
+            QMessageBox::warning(this, "Error:", "Wrong input data...");
         in >> buff;
         tmp.type = string_to_id(buff);
         in >> tmp.x;
@@ -93,7 +98,7 @@ int MainWindow::string_to_id(QString name)
         return 3;
     if (name == "knight")
         return 4;
-    return 0;
+    return -1;
 }
 
 QString MainWindow::id_to_string(int id)

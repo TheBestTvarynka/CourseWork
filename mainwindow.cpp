@@ -71,6 +71,13 @@ void MainWindow::read_file()
     in >> tmp.y;
     while (!in.atEnd())
     {
+        if (data->size() == 64)
+        {
+            QMessageBox::warning(this, "Warning:", "Chess board is full...");
+            Input.flush();
+            Input.close();
+            return;
+        }
         // qDebug() << tmp.type << " " << tmp.x << " " << tmp.y << "\n";
         if (tmp.type != -1 && (tmp.x >= 1 && tmp.x <= 8) && (tmp.y >= 1 && tmp.y <= 8))
             data->push_back(tmp);
@@ -81,7 +88,6 @@ void MainWindow::read_file()
         in >> tmp.x;
         in >> tmp.y;
     }
-
     Input.flush();
     Input.close();
 }

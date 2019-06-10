@@ -16,9 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     file_name = nullptr;
-    unsaved_work = true;
+    unsaved_work = false;
     path = false;
-    setWindowTitle("[*Untitled.txt] - Chess program");
+    setWindowTitle("[Untitled.txt] - Chess program");
 
     connect(ui->widget, SIGNAL(check_fights(int)), this, SLOT(on_check_clicked(int)));
     connect(ui->widget, SIGNAL(update_list()), this, SLOT(update_ListWidget()));
@@ -161,7 +161,7 @@ void MainWindow::on_actionQuit_triggered()
 void MainWindow::on_actionOpen_triggered()
 {
     save_work();
-    file_name = QFileDialog::getOpenFileName(this, tr("Open file"), "/home/", "All files (*.*);;Text file (*.txt);;CSV-file (*.csv)");
+    file_name = QFileDialog::getOpenFileName(this, tr("Open file"), "/home/", "All files (*.*);;Text file (*.txt)");
     if (file_name != nullptr)
     {
         // QMessageBox::information(this, tr("file name"), file_name);
@@ -186,14 +186,13 @@ void MainWindow::on_actionNew_triggered()
 
 void MainWindow::on_actionSave_as_triggered()
 {
-    file_name = QFileDialog::getSaveFileName(this, tr("Save file as"), "/home/", "All files (*.*);;Text file (*.txt);;CSV-file (*.csv)");
+    file_name = QFileDialog::getSaveFileName(this, tr("Save file as"), "/home/", "All files (*.*);;Text file (*.txt)");
     write_file();
 //    unsaved_work = false;
 }
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    qDebug() << "delete figure button...";
     save_flag();
     int s = ui->widget->selectedFigure;
     if (s != -1)
@@ -206,7 +205,6 @@ void MainWindow::on_pushButton_4_clicked()
         ui->widget->selectedFigure = -1;
         ui->listWidget->clear();
     }
-    qDebug() << "deleting finished success...";
 }
 
 void MainWindow::on_clear_scene_clicked()
@@ -220,7 +218,6 @@ void MainWindow::on_clear_scene_clicked()
 
 void MainWindow::check_rook(int selected)
 {
-//    qDebug() << "rook";
     QString t;
     QVector<figure> *data = ui->widget->GetData();
     QVector<point> *battle = ui->widget->GetBattle();
@@ -361,7 +358,6 @@ void MainWindow::check_knight(int selected)
             tmp.x = (*data)[i].x;
             tmp.y = (*data)[i].y;
             battle->push_back(tmp);
-//            ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
             t = id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")";
             list_battles.push_back(t);
         }
@@ -388,7 +384,6 @@ void MainWindow::check_king(int selected)
             tmp.x = (*data)[i].x;
             tmp.y = (*data)[i].y;
             battle->push_back(tmp);
-//            ui->listWidget->addItem(id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")");
             t = id_to_string((*data)[selected].type) + "(" + QString::number((*data)[selected].x) + ", " + QString::number((*data)[selected].y) + ") beats a " + id_to_string((*data)[i].type) + " (" + QString::number((*data)[i].x) + ", " + QString::number((*data)[i].y) + ")";
             list_battles.push_back(t);
         }
@@ -460,9 +455,9 @@ void MainWindow::on_comboBox_activated(int index)
 void MainWindow::on_save_current_kils_clicked()
 {
     QString file = QFileDialog::getSaveFileName(this, tr("Save file"), "/home/", "All files (*.*);;Text file (*.txt)");
-    if (file == nullptr || !file.contains(".txt"))
+    if (file == nullptr)
     {
-        qDebug() << "file's name is empty or wrong type...";
+        qDebug() << "file's name is empty...";
         return;
     }
     int lim = list_battles.size();
@@ -486,9 +481,9 @@ void MainWindow::on_save_current_kils_clicked()
 void MainWindow::on_save_all_kils_clicked()
 {
     QString file = QFileDialog::getSaveFileName(this, tr("Save file"), "/home/", "All files (*.*);;Text file (*.txt)");
-    if (file == nullptr || !file.contains(".txt"))
+    if (file == nullptr)
     {
-        qDebug() << "file's name is empty or wrong type...";
+        qDebug() << "file's name is empty...";
         return;
     }
     ui->widget->SetShow_path(false);

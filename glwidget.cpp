@@ -37,7 +37,7 @@ void GLWidget::initializeGL()
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, 649, 649, 0, 0, 1);
+    glOrtho(0, 649, 649, 0, 0, 1);
 	SizeSquare = 649 / 8;
 	glEnable (GL_TEXTURE_2D);
 	////////// enable alfa

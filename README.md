@@ -9,3 +9,8 @@
   Після кожного вибору іншої фігури, програма автоматично виводить список кого поточна фігура може бити на відповідному полі.
 Нижче поля із результатами є дві кнопки: . "save current as file" - зберігає у файл результат роботи для поточної фігури, а "save all as file" - для усіх фігур одразу.
 ![Selected figure:](https://raw.githubusercontent.com/TheBestTvarynka/CourseWork/master/documentation/3.png)
+
+##
+Source info
+
+This program wrote on c++ with Qt library. Chess-board draw in OpenGL
